@@ -73,7 +73,7 @@ public class SwiftFlutterDocScannerPlugin: NSObject, FlutterPlugin,
             let alert = UIAlertController(
                 title: "Page Limit Exceeded",
                 message:
-                    "You scanned \(scan.pageCount) pages, but only \(scanLimit) will be kept.",
+                    "You scanned \(scan.pageCount) pages, but only \(scanLimit) will be Uploaded.",
                 preferredStyle: .alert
             )
 
@@ -181,11 +181,12 @@ public class SwiftFlutterDocScannerPlugin: NSObject, FlutterPlugin,
 }
 
 extension UIImage {
-    func compressed(to quality: CGFloat = 0.7) -> UIImage? {
+    func compressed(to quality: CGFloat) -> UIImage? {
         // Convert UIImage to JPEG data with compression
         guard let jpegData = self.jpegData(compressionQuality: quality) else {
             return nil
         }
+        
         // Convert back to UIImage
         return UIImage(data: jpegData)
     }
