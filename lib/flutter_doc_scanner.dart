@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+
 import 'flutter_doc_scanner_platform_interface.dart';
 
 class FlutterDocScanner {
@@ -14,8 +15,10 @@ class FlutterDocScanner {
     return FlutterDocScannerPlatform.instance.getScannedDocumentAsImages(page);
   }
 
-  Future<dynamic> getScannedDocumentAsPdf({int page = 4, double quality = 0.8}) {
-    return FlutterDocScannerPlatform.instance.getScannedDocumentAsPdf(page);
+  Future<dynamic> getScannedDocumentAsPdf(
+      {int page = 4, double quality = 0.8}) {
+    return FlutterDocScannerPlatform.instance
+        .getScannedDocumentAsPdf(page: page, quality: quality);
   }
 
   Future<dynamic> getScanDocumentsUri({int page = 4}) {

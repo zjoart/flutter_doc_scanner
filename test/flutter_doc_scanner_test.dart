@@ -1,7 +1,7 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_doc_scanner/flutter_doc_scanner.dart';
-import 'package:flutter_doc_scanner/flutter_doc_scanner_platform_interface.dart';
 import 'package:flutter_doc_scanner/flutter_doc_scanner_method_channel.dart';
+import 'package:flutter_doc_scanner/flutter_doc_scanner_platform_interface.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 class MockFlutterDocScannerPlatform
@@ -17,7 +17,9 @@ class MockFlutterDocScannerPlatform
   Future<String?> getScannedDocumentAsImages([int page = 5]) => Future.value();
 
   @override
-  Future<String?> getScannedDocumentAsPdf([int page = 5]) => Future.value();
+  Future<String?> getScannedDocumentAsPdf(
+          {int page = 5, required double quality}) =>
+      Future.value();
 
   @override
   Future<String?> getScanDocumentsUri([int page = 5]) => Future.value();
