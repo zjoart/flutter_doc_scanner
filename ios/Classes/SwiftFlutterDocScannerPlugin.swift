@@ -11,6 +11,7 @@ public class SwiftFlutterDocScannerPlugin: NSObject, FlutterPlugin,
     var resultChannel: FlutterResult?
     var presentingController: VNDocumentCameraViewController?
     var currentMethod: String?
+    var quality: CGFloat?
     var page: Int?
 
     public static func register(with registrar: FlutterPluginRegistrar) {
@@ -44,6 +45,9 @@ public class SwiftFlutterDocScannerPlugin: NSObject, FlutterPlugin,
         self.currentMethod = call.method
         if let args = call.arguments as? [String: Any] {
             self.page = args["page"] as? Int ?? 1
+            if let quality = args["quality"] as? Double {
+                self.quality = CGFloat(quality)
+            }
         }
 
         self.presentingController = VNDocumentCameraViewController()
@@ -122,7 +126,7 @@ public class SwiftFlutterDocScannerPlugin: NSObject, FlutterPlugin,
         resultChannel?(filenames)
     }
 
-    private func saveScannedPdf(scan: VNDocumentCameraScan, limit: Int) {
+    private func saveScannedPdf(scan: VNDocumentCameraScan, limit: Int, quality: CGFloat) {
         let tempDirPath = getDocumentsDirectory()
         let currentDateTime = Date()
         let df = DateFormatter()
@@ -135,9 +139,12 @@ public class SwiftFlutterDocScannerPlugin: NSObject, FlutterPlugin,
         let pdfDocument = PDFDocument()
         let pagesToProcess = min(scan.pageCount, limit)
 
+
         for i in 0..<pagesToProcess {
             let pageImage = scan.imageOfPage(at: i)
-            let compressedPageImage = pageImage.compressed(to: 0.65)
+            let compressedPageImage = quality != null 
+                                      ? pageImage.compressed(to: quality!)
+                                      : null
 
             if let pdfPage = PDFPage(image: compressedPageImage ?? pageImage) {
                 pdfDocument.insert(pdfPage, at: pdfDocument.pageCount)
