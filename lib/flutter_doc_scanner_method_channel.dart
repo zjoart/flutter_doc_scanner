@@ -35,10 +35,10 @@ class MethodChannelFlutterDocScanner extends FlutterDocScannerPlatform {
   }
 
   @override
-  Future<dynamic> getScannedDocumentAsPdf([int page = 1]) async {
+  Future<dynamic> getScannedDocumentAsPdf({int page = 1, required double quality}) async {
     final data = await methodChannel.invokeMethod<dynamic>(
       'getScannedDocumentAsPdf',
-      {'page': page},
+      {'page': page, 'quality':quality,},
     );
     return data;
   }
